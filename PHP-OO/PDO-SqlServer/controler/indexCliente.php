@@ -1,36 +1,50 @@
 <?php
-include("../model/Cliente.php");
-$conn = new Cliente();
 
-if(isset($_POST["IDCliente"]) && isset($_POST["NomeCliente"]) 
-    && isset($_POST["Estado"]) && isset($_POST["SiglaUF"]) && isset($_POST["Cidade"]) 
-    && isset($_POST["opcao"]) 
-    && !empty($_POST["IDCliente"]) && !empty($_POST["NomeCliente"]) 
-    && !empty($_POST["Estado"]) && !empty($_POST["SiglaUF"]) && !empty($_POST["Cidade"]) 
-    && !empty($_POST["opcao"])
-    ){
+
+
+class IndexCliente{
+
+    public function __construct(){
+
+    }
+}
+
+
+if(isset($_POST["opcao"]) && !empty($_POST["opcao"])){
+
         if($_POST["opcao"] == "inserir"){
-            $inserir = $conn->addCliente($_POST["IDCliente"], $_POST["NomeCliente"], $_POST["Estado"], 
-            $_POST["SiglaUF"], $_POST["Cidade"]);
-
+            include("../model/Cliente.php");
+            $conn = new Cliente();//model
+            if(isset($_POST["IDCliente"]) && isset($_POST["NomeCliente"]) && isset($_POST["Estado"]) && isset($_POST["SiglaUF"]) && isset($_POST["Cidade"]) && !empty($_POST["IDCliente"]) && !empty($_POST["NomeCliente"]) && !empty($_POST["Estado"]) && !empty($_POST["SiglaUF"]) && !empty($_POST["Cidade"])){
+                $inserir = $conn->addCliente($_POST["IDCliente"], $_POST["NomeCliente"], $_POST["Estado"], $_POST["SiglaUF"], $_POST["Cidade"]);
+                           
             if($inserir) 
                 header("location: ../view/formularioCadastroCliente.php?mensagem=sucesso");
             else 
                 header("location: ../view/formularioCadastroCliente.php?mensagem=erro");
-        }
+        }}
     }elseif(isset($_GET["opcao"]) && !empty($_GET["opcao"])){
-        if($_GET["opcao"]=="listAll"){
+        if($_GET["opcao"] == "inserir"){
+            include("./view/ListarCliente.php");
+            $cliente = new ListarCliente();//view  
+            $inserir = $cliente->cadastrarCliente();          
+        }elseif($_GET["opcao"]=="listAll"){
+            include("./model/Cliente.php");
+            $conn = new Cliente();//model  
             $users = $conn->listAll();
-            /*echo "<pre>";
-                var_dump($users);
-            echo "</pre>";*/
-            header("location: ../view/listarCliente.php?users[]=" . $users);
             
+            include("./view/ListarCliente.php");
+            $cliente = new ListarCliente();//view  
+            $cliente->ListarTodos($users);   
+
         }elseif(($_GET["opcao"] == "listOne") && isset($_GET["IDCliente"]) && !empty($_GET["IDCliente"])){
+            include("./model/Cliente.php");
+            $conn = new Cliente();//model  
             $user = $conn->listOne($_GET["IDCliente"]);
-            echo "<pre>";
-                print_r($user);
-            echo "</pre>";
+            //$cliente = new ListarCliente();
+            include("./view/ListarCliente.php");
+            $cliente = new ListarCliente();
+            $cliente->ListarUm($user);
         }
     }
      //   echo "Campo(s) obrigatório(s) não preenchido(s). Retorne e preencha todos os campos";
