@@ -28,6 +28,18 @@ class Cliente{
         return $users;
     }
 
+    public function delete($IDCliente){
+        $statement = $this->connection->prepare("
+        delete from clientes where IDCliente = :IDCliente");
+        $usuarioExcluido = $statement->execute(array(":IDCliente"=>$IDCliente));
+        
+        //$users = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if($usuarioExcluido)
+            return true;
+        else   
+            return false;
+    }
+
     public function addCliente($IDCliente, $NomeCliente, $Estado, $SiglaUF, $Cidade){
         try {
         $statement = $this->connection->prepare("

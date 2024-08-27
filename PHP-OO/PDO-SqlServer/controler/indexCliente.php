@@ -1,14 +1,12 @@
 <?php
-
-
-
+/*
 class IndexCliente{
 
     public function __construct(){
 
     }
 }
-
+*/
 
 if(isset($_POST["opcao"]) && !empty($_POST["opcao"])){
 
@@ -16,6 +14,7 @@ if(isset($_POST["opcao"]) && !empty($_POST["opcao"])){
             include("../model/Cliente.php");
             $conn = new Cliente();//model
             if(isset($_POST["IDCliente"]) && isset($_POST["NomeCliente"]) && isset($_POST["Estado"]) && isset($_POST["SiglaUF"]) && isset($_POST["Cidade"]) && !empty($_POST["IDCliente"]) && !empty($_POST["NomeCliente"]) && !empty($_POST["Estado"]) && !empty($_POST["SiglaUF"]) && !empty($_POST["Cidade"])){
+                
                 $inserir = $conn->addCliente($_POST["IDCliente"], $_POST["NomeCliente"], $_POST["Estado"], $_POST["SiglaUF"], $_POST["Cidade"]);
                            
             if($inserir) 
@@ -45,6 +44,15 @@ if(isset($_POST["opcao"]) && !empty($_POST["opcao"])){
             include("./view/ListarCliente.php");
             $cliente = new ListarCliente();
             $cliente->ListarUm($user);
+        }elseif(($_GET["opcao"] == "excluir") && isset($_GET["IDCliente"]) && !empty($_GET["IDCliente"])){
+            include("./model/Cliente.php");
+            $conn = new Cliente();//model  
+            $user = $conn->delete($_GET["IDCliente"]);
+            
+            if($user)
+                header("location: index.php?pagina=Cliente&opcao=listAll&acao=excluir&mensagem=sucesso");
+            else
+                header("location: index.php?pagina=Cliente&opcao=listAll&acao=excluir&mensagem=erro");
         }
     }
      //   echo "Campo(s) obrigatório(s) não preenchido(s). Retorne e preencha todos os campos";

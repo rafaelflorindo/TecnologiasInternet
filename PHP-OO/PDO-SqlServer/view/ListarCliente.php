@@ -20,10 +20,47 @@
         a{
             text-decoration: none;
         }
+        .btn-cadastrar {
+            background-color: #007bff; /* Cor de fundo azul */
+            color: white;              /* Cor do texto branco */
+            border: none;              /* Sem borda */
+            padding: 10px 20px;        /* Espaçamento interno */
+            font-size: 16px;           /* Tamanho da fonte */
+            border-radius: 5px;        /* Bordas arredondadas */
+            cursor: pointer;           /* Mão ao passar o cursor */
+            transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+        }
+
+.btn-cadastrar:hover {
+    background-color: #0056b3; /* Cor de fundo quando o cursor está sobre o botão */
+}
+.alert {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos específicos para alertas de sucesso */
+.alert-success {
+    background-color: #4CAF50; /* Verde */
+    border: 1px solid #388E3C; /* Verde escuro */
+}
+
+/* Opcional: estiliza o texto em negrito */
+.alert strong {
+    font-weight: bold;
+}
+.alert-error {
+    background-color: #f44336; /* Vermelho */
+    border: 1px solid #d32f2f; /* Vermelho escuro */
+}
     </style>
 <?php
 
 class ListarCliente{
+
     public function cadastrarCliente(){
         ?>
         <form action="controler/indexCliente.php" method="POST">
@@ -38,9 +75,40 @@ class ListarCliente{
     </form>
     <?php
     }
+    
     public function ListarTodos($users){
+        //&acao=excluir&mensagem=sucesso
+
+        if(isset($_GET["acao"]) && !empty($_GET["acao"]) && isset($_GET["mensagem"]) && !empty($_GET["mensagem"])){
+            $acao = $_GET["acao"];
+            $mensagem = $_GET["mensagem"];
+
+            if($acao == "excluir"){
+                if ($mensagem=="sucesso"){
+                    ?>
+                    <div class="alert alert-success">
+                        <strong>Sucesso!</strong> Registro Excluido com sucesso.
+                    </div>
+                    <?php
+                }elseif($mensagem=="erro"){
+                    ?>
+                    <div class="alert alert-error">
+                        <strong>Erro!</strong> Erro ao excluir o registro.
+                    </div>
+                    <?php
+                    
+                }else{
+                    echo "Erro de Mensagem!!!";
+                }
+
+            }
+        }
     ?>
-        <a href="index.php?pagina=Cliente&opcao=inserir"><img src="./view/registro.png" width="30px">Cadastrar novo cliente</a><br>
+    
+        <a href="index.php?pagina=Cliente&opcao=inserir">
+            <button class="btn-cadastrar">Cadastrar</button>
+        </a><br>
+        <!--<img src="./view/registro.png" width="30px">Cadastrar novo cliente</a><br>-->
         <table>
         <thead>
             <tr>

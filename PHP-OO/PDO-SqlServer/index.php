@@ -49,14 +49,15 @@
 <body>
     <div class="navbar">
         <a href="index.php?pagina=Cliente&opcao=listAll">Cliente</a>
-        <a href="Produto">Produto</a>
+        <a href="index.php?pagina=Produto&opcao=listAll">Produto</a>
         <a href="Item">z</a>
     </div>
     <div style="padding:20px;">
     <?php
         if(isset($_GET["pagina"]) && !empty($_GET["pagina"])){
-            $pagina = $_GET["pagina"];
-            include ("controler/index".$pagina.".php");
+            $pagina = $_GET["pagina"]; //Cliente
+            include ("controler/index".$pagina.".php");//controler/indexCliente.php
+            //controler/indexProduto.php
         }else{
             ?>
             <h1>Bem-vindo ao Menu Horizontal</h1>
