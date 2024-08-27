@@ -60,5 +60,29 @@ class Cliente{
         return false;
     }        
     }
+    public function updateCliente($IDCliente, $NomeCliente, $Estado, $SiglaUF, $Cidade){
+        try {
+        $statement = $this->connection->prepare("
+        update clientes set
+        NomeCliente = :NomeCliente, 
+        Estado = :Estado, 
+        SiglaUF = :SiglaUF, 
+        Cidade = :Cidade 
+        where IDCliente = :IDCliente");
+
+        $statement->execute(
+            array(
+                ":IDCliente" => $IDCliente,
+                ":NomeCliente" => $NomeCliente,
+                ":Estado" => $Estado,
+                ":SiglaUF" => $SiglaUF,
+                ":Cidade" => $Cidade
+        )); 
+        return true;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+        return false;
+    }        
+    }
 
 }
