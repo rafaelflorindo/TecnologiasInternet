@@ -1,5 +1,5 @@
 <?php
-class Cliente{
+class Loja{
     public $connection;
 
     public function __construct()
@@ -13,7 +13,7 @@ class Cliente{
 
     public function listAll(){
         //$statement = $this->connection->prepare("SELECT * FROM clientes");
-        $statement = $this->connection->prepare("SELECT * FROM clientes ORDER BY NomeCliente OFFSET 00
+        $statement = $this->connection->prepare("SELECT * FROM Lojas ORDER BY loja OFFSET 00
          ROWS FETCH NEXT 10 ROWS ONLY");
         $statement->execute();
         
@@ -21,19 +21,19 @@ class Cliente{
         return $users;
     }
 
-    public function listOne($IDCliente){
+    public function listOne($IDLoja){
         $statement = $this->connection->prepare("
-        SELECT * FROM clientes where IDCliente = :IDCliente");
-        $statement->execute(array(":IDCliente"=>$IDCliente));
+        SELECT * FROM lojas where IDLoja = :IDLoja");
+        $statement->execute(array(":IDLoja"=>$IDLoja));
         
         $users = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $users;
     }
 
-    public function delete($IDCliente){
+    public function delete($IDLoja){
         $statement = $this->connection->prepare("
-        delete from clientes where IDCliente = :IDCliente");
-        $usuarioExcluido = $statement->execute(array(":IDCliente"=>$IDCliente));
+        delete from clientes where IDLoja = :IDLoja");
+        $usuarioExcluido = $statement->execute(array(":IDLoja"=>$IDLoja));
         
         //$users = $statement->fetchAll(PDO::FETCH_ASSOC);
         if($usuarioExcluido)
@@ -42,19 +42,16 @@ class Cliente{
             return false;
     }
 
-    public function addCliente($IDCliente, $NomeCliente, $Estado, $SiglaUF, $Cidade){
+    public function addLoja($IDLoja, $loja, $Estado, $SiglaUF, $Cidade){
         try {
         $statement = $this->connection->prepare("
-        insert into clientes (IDCliente, NomeCliente, Estado, SiglaUF, Cidade) 
-        values(:IDCliente, :NomeCliente, :Estado, :SiglaUF, :Cidade)");
+        insert into clientes (IDLoja, loja) 
+        values(:IDLoja, :loja)");
 
         $statement->execute(
             array(
-                ":IDCliente" => $IDCliente,
-                ":NomeCliente" => $NomeCliente,
-                ":Estado" => $Estado,
-                ":SiglaUF" => $SiglaUF,
-                ":Cidade" => $Cidade
+                ":IDLoja" => $IDLoja,
+                ":loja" => $loja
         )); 
         return true;
     } catch(PDOException $e) {
@@ -62,23 +59,17 @@ class Cliente{
         return false;
     }        
     }
-    public function updateCliente($IDCliente, $NomeCliente, $Estado, $SiglaUF, $Cidade){
+    public function updateLoja($IDLoja, $loja){
         try {
         $statement = $this->connection->prepare("
         update clientes set
-        NomeCliente = :NomeCliente, 
-        Estado = :Estado, 
-        SiglaUF = :SiglaUF, 
-        Cidade = :Cidade 
-        where IDCliente = :IDCliente");
+        loja = :loja 
+        where IDLoja = :IDLoja");
 
         $statement->execute(
             array(
-                ":IDCliente" => $IDCliente,
-                ":NomeCliente" => $NomeCliente,
-                ":Estado" => $Estado,
-                ":SiglaUF" => $SiglaUF,
-                ":Cidade" => $Cidade
+                ":IDLoja" => $IDLoja,
+                ":loja" => $loja
         )); 
         return true;
     } catch(PDOException $e) {
@@ -86,5 +77,4 @@ class Cliente{
         return false;
     }        
     }
-
 }

@@ -111,6 +111,62 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
     background-color: #45a049; /* Escurece a cor de fundo quando o mouse está sobre o botão */
 }
+/*
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}*/
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.edit {
+    background-color: #4CAF50; /* Verde */
+}
+
+.edit:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.view {
+    background-color: #2196F3; /* Azul */
+}
+
+.view:hover {
+    background-color: #0b7dda;
+    transform: scale(1.05);
+}
+
+.delete {
+    background-color: #f44336; /* Vermelho */
+}
+
+.delete:hover {
+    background-color: #e53935;
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
     </style>
 <?php
 
@@ -236,7 +292,12 @@ class ListarCliente{
             <td><?php echo $user['SiglaUF'] ?></td>
             <td><?php echo $user['Cidade'] ?></td>
             <td>
-                <a href="index.php?pagina=Cliente&opcao=editar&IDCliente=<?=$user['IDCliente'];?>">
+            <div class="button-container">
+            <a href="index.php?pagina=Cliente&opcao=editar&IDCliente=<?=$user['IDCliente'];?>"><button class="btn edit">Editar</button></a>
+            <a href="index.php?pagina=Cliente&opcao=listOne&IDCliente=<?=$user['IDCliente'];?>"><button class="btn view">Visualizar</button></a>
+            <a href="index.php?pagina=Cliente&opcao=excluir&IDCliente=<?=$user['IDCliente'];?>"><button class="btn delete">Excluir</button></a>
+    </div>
+              <!--  <a href="index.php?pagina=Cliente&opcao=editar&IDCliente=<?=$user['IDCliente'];?>">
                     <img src="./view/botao-editar.png" width="30px">
                 </a>
                 <a href="index.php?pagina=Cliente&opcao=listOne&IDCliente=<?=$user['IDCliente'];?>">
@@ -244,7 +305,7 @@ class ListarCliente{
                 </a>
                 <a href="index.php?pagina=Cliente&opcao=excluir&IDCliente=<?=$user['IDCliente'];?>">
                     <img src="./view/excluir.png" width="30px">
-                </a>
+                </a>-->
             </td>
         </tr>
         <?php endforeach; ?>
